@@ -1,2 +1,2 @@
-./aws-github-repo/*
-#.gitignore
+aws-github-repo/
+.gitignore
