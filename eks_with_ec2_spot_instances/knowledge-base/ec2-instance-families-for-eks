@@ -1,0 +1,106 @@
+# EC2 Instance Families for AWS EKS
+
+When selecting EC2 instance types for AWS EKS, consider the nature of your workload to choose the most appropriate instance family:
+
+## General Purpose Instances (M5, M5a, M5n, M6g)
+
+- Balanced compute, memory, and networking resources.
+- Ideal for web servers, developer environments, and medium databases.
+
+## Compute Optimized Instances (C5, C5n, C6g)
+
+- High performance processors for compute-intensive applications.
+- Best for batch processing, media transcoding, and high-performance computing.
+
+## Memory Optimized Instances (R5, R5n, R6g, X1)
+
+- Fast performance for workloads that process large data sets in memory.
+- Suitable for high-performance databases and real-time big data analytics.
+
+## Storage Optimized Instances (I3, D2, H1)
+
+- High, sequential read and write access to large data sets on local storage.
+- Ideal for distributed file systems and data warehousing applications.
+
+## Accelerated Computing Instances (P3, P4, G4, F1)
+
+- Hardware accelerators for graphics processing or data pattern matching.
+- Use cases include machine learning and computational finance.
+
+## Graviton2-based Instances (M6g, C6g, R6g)
+
+- Custom built by AWS using 64-bit Arm Neoverse cores.
+- Provides the best price performance for a wide range of workloads.
+
+
+
+
+--------------------------------------------------------------------------------
+
+(some letters before digits)
+
+#### M - general purpose
+#### C - cpu optimized
+#### R - mem optimized
+#### X - extreme mem optimized
+
+
+
+#### I - i/o optimized, 
+- high IOPS applications 
+- fast SSD storage
+- for transactional systems, high-performance NoSQL databases like Cassandra or MongoDB
+
+#### D - dense storage optimized, 
+- for distributed file systems, data warehousing, and Hadoop clusters
+- HDD 
+- sequential access patterns
+
+#### H - high disk thruput 
+- for high disk throughput and large data sets, similar to D instances but with more emphasis on high throughput
+- for big data workloads that benefit from high sequential read/write access, such as MapReduce and DFS
+
+
+
+#### P - GPU/Compute optimized 
+- general-purpose GPU compute applications, HPC, 
+- __parallel computing__
+
+#### G - graphics optimized 
+- rendering, graphic encoding, and gaming, lighter ML, 
+__parallel computing__, 
+- focus on cost-effectiveness
+
+#### F - Field Programmable Gate Array 
+- for workloads that require __custom__ hardware accelerations such as genomics research, financial analytics, real-time video processing, big data search and analysis, and security encryption.
+
+
+
+
+
+--------------------------------------------------------------------------------
+
+(letters after digits)
+
+#### n: 
+- network-optimized. 
+- higher bandwidth, higher packet per second (PPS) performance, and lower network jitter (latency)
+
+#### g: 
+- powered by AWS Graviton processors, which use 64-bit Arm Neoverse cores. 
+- balance of compute, memory, and network resources 
+- generally more cost-effective for workloads that are supported by the Arm architecture. 
+
+#### a: 
+- is powered by AMD EPYC processors. 
+- a variant of the original or 'standard' instances (like m5 or r5) but at a lower cost point. - for workloads that require a balance of compute, memory, and networking resources for AMD-architecture supported technologies.
+
+#### i:
+- intel-based processors 
+- higher bandwidth and lower latency networking 
+- EBS-optimised by d
+
+
+#### d:
+- has local NVMe-based SSD storage that is physically connected to the host server
+- high-speed, low-latency local storage
