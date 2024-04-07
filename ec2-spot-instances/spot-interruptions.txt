@@ -1,0 +1,17 @@
+##### signals
+
+Spot Instance interruption notice -- a warning that is issued two minutes before Amazon EC2 stops or terminates your Spot Instance
+
+
+EC2 Rebalance Recommendation -- a notification when spot instances are at elevated risk of interruption. The signal can arrive sooner than the two-minute Spot Instance interruption notice.Not always though.
+
+
+
+##### increase the resilience
+
+- Add an Availability Zone - the EC2 Auto Scaling group is currently deployed in two AZs. By adding an AZ to your application, you will tap into more EC2 Spot capacity pools.
+- Add Instance Types - the 6 instance types that are configured in the Auto Scaling group have small performance variability, so it’s possible to run all these instance types in a single ASG and scale on the same dynamic scaling policy.
+- Enable Capacity Rebalaning
+- Use the Least Outstanding Requests (LOR) load balancing algorithm instead of Round Robin - the load balancer will send it to the target with least number of outstanding requests
+- you can also customize Spot interruption notification handling with EventBridge and Lambda 
+(example https://github.com/awslabs/ec2-spot-labs/blob/master/ec2-spot-interruption-handler/README.md)

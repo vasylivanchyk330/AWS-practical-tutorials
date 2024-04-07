@@ -1,6 +1,6 @@
 # LAUNCHING EC2 SPOT INSTANCES VIA EC2 AUTO SCALING GROUP
 
-# 1. create asg policy file (which later during the creation of asg will be used as `--mixed-instances-policy` file)
+# 1. Attribute-based instance type selection - ABIS - create asg policy file (which later during the creation of asg will be used as `--mixed-instances-policy` file)
 cat <<EoF > ./asg-policy.json
 {
    "LaunchTemplate":{

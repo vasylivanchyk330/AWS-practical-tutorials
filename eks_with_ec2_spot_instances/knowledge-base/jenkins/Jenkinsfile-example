@@ -1,0 +1,76 @@
+pipeline {
+    agent { 
+        node {
+            label 'docker-agent-python'
+        }
+    }
+
+    parameters {
+        string(name: 'GREETING_NAME', defaultValue: 'World', description: 'Name to greet')
+    }
+
+    environment {
+        // Define environment variables that will be accessible throughout the pipeline
+        MY_APP_DIR = 'myapp'
+        VENV_PATH = 'venv'
+    }
+
+    triggers {
+        pollSCM '*/15 * * * 1-5'
+    }
+
+    stages {
+        stage('Preparation') {
+            steps {
+                echo "Preparing the environment.."
+                sh """
+                mkdir -p ${MY_APP_DIR}/${VENV_PATH}
+                cd ${MY_APP_DIR}
+                python3 -m venv ${VENV_PATH}
+                """
+            }
+        }
+        stage('Build') {
+            steps {
+                echo "Building.."
+                sh """
+                . ${MY_APP_DIR}/${VENV_PATH}/bin/activate
+                cd ${MY_APP_DIR}
+                pip install -r requirements.txt
+                """
+            }
+        }
+        stage('Test') {
+            steps {
+                echo "Testing.."
+                sh """
+                . ${MY_APP_DIR}/${VENV_PATH}/bin/activate
+                cd ${MY_APP_DIR}
+                python3 hello.py
+                python3 hello.py --name=${params.GREETING_NAME}
+                """
+            }
+        }
+        stage('Deliver') {
+            steps {
+                echo 'Delivering....'
+                sh '''
+                echo "doing delivery stuff.."
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            echo 'Build completed successfully.'
+        }
+        failure {
+            echo 'Build failed.'
+        }
+        always {
+            echo 'Cleaning up...'
+            sh 'rm -rf ${MY_APP_DIR}/${VENV_PATH}'
+        }
+    }
+}

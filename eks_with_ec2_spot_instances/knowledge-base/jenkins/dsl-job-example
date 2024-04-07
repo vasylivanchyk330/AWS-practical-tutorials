@@ -1,0 +1,59 @@
+job('example-freestyle-job') {
+    description('An example of a freestyle job in Jenkins using Job DSL.')
+
+    // Configure SCM
+    scm {
+        git {
+            remote {
+                url('https://github.com/example/repo.git')
+                credentials('github-credentials-id')
+            }
+            branch('main')
+        }
+    }
+
+    // Configure triggers
+    triggers {
+        scm('H/15 * * * *') // Poll SCM every 15 minutes
+        cron('0 3 * * 1-5') // Schedule the job to run at 3AM every weekday
+    }
+
+    // Define build steps
+    steps {
+        // Basic shell step for preparation or checks
+        shell('echo "Preparing for build..." && mkdir -p /tmp/build_dir')
+
+        // Invoke Maven build
+        maven {
+            mavenInstallation('default')
+            goals('clean install')
+            pom('pom.xml')
+            jvmOptions('-Xmx1024m')
+            properties('myProperty=myValue')
+        }
+
+        // Another shell step to do post-build operations
+        shell('echo "Build completed. Post-build operations..."')
+    }
+
+    // Archive the build artifacts
+    publishers {
+        archiveArtifacts('target/*.jar')
+
+        // Send email notifications
+        mailer('dev-team@example.com', false, true)
+    }
+    // Define environment variables
+    environmentVariables {
+        env('ENV', 'PRODUCTION')
+    }
+
+    // Assign node
+    assignedNode('us-ca-lppe0009')
+
+    // Enable project-based security
+    authorization {
+        permission('hudson.model.Item.Read', 'anonymous')
+        permission('hudson.model.Item.Build', 'authenticated')
+    }
+}
