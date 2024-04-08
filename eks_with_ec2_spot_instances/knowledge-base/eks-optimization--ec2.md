@@ -3,13 +3,13 @@
 #### Amazon EKS managed node groups
 - does all the automation for a lifecycle
 - tags nodes with k8s.io/cluster-autoscaler/enabled=true and k8s.io/cluster-autoscaler/
-- option for stop inctances -
+- option for spot inctances -
     - tagged with eks.amazonaws.com/capacityType: SPOT
     - capacity-optimized
 
 #### Spot Instance diversification
 - ASG -  of instance types that provide approximately equal capacity
-- use ec2-instance-selector utility
+- u can use ec2-instance-selector utility
 
 #### Spot Best Practices - applied out of the box:
 - Capacity Optimized -- from the most-available spare capacity pools
